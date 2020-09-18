@@ -15,13 +15,16 @@
     <script>
         const start = document.querySelector("#start");
         const stop = document.querySelector("#stop");
+        const coordinates = [];
 
         start.addEventListener('click', () => {
-            navigator.geolocation.getCurrentPosition(data => {
+            navigator.geolocation.watchPosition(data => {
                 console.log(data);
+                coordinates.push(data.coords.latitude, data.coords.longitude);
+                window.localStorage.setItem('coordinates', JSON.stringify(coordinates))
             }, (err) => {
                 console.log(err);
-            })
+            }, { enableHighAccuracy: true })
         });
     </script>
 
